@@ -1,0 +1,53 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.Appointment.CommandApi", "EventStoreLearning\EventStoreLearning.Appointment.CommandApi.csproj", "{8C5491E7-8048-47C5-9007-3B9FD8CB2FA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.Appointment", "EventStoreLearning.Appointment\EventStoreLearning.Appointment.csproj", "{8B3303A6-632D-4C6B-BBD0-596B05D84A73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.Common", "EventStoreLearning.Common\EventStoreLearning.Common.csproj", "{BD632713-7620-44A9-A4D3-7CE5F6FDB80C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.EventStore", "EventStoreLearning.EventStore\EventStoreLearning.EventStore.csproj", "{9C46D06E-75A6-4380-ADAA-3BAC4FAD7EC9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.Appointment.Projection", "EventStoreLearning.Appointment.Projection\EventStoreLearning.Appointment.Projection.csproj", "{A0F36F8B-3E7D-4745-BB34-06D956989915}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.Appointment.ReadModel", "EventStoreLearning.Appointment.ReadModel\EventStoreLearning.Appointment.ReadModel.csproj", "{4B042883-6B14-4830-9EB8-AD7B20FBD9C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.Appointment.QueryApi", "EventStoreLearning.Appointment.QueryApi\EventStoreLearning.Appointment.QueryApi.csproj", "{B2AD65DC-784C-4978-AE1B-6C94FCA50332}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8C5491E7-8048-47C5-9007-3B9FD8CB2FA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C5491E7-8048-47C5-9007-3B9FD8CB2FA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C5491E7-8048-47C5-9007-3B9FD8CB2FA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C5491E7-8048-47C5-9007-3B9FD8CB2FA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B3303A6-632D-4C6B-BBD0-596B05D84A73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B3303A6-632D-4C6B-BBD0-596B05D84A73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B3303A6-632D-4C6B-BBD0-596B05D84A73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B3303A6-632D-4C6B-BBD0-596B05D84A73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD632713-7620-44A9-A4D3-7CE5F6FDB80C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD632713-7620-44A9-A4D3-7CE5F6FDB80C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD632713-7620-44A9-A4D3-7CE5F6FDB80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD632713-7620-44A9-A4D3-7CE5F6FDB80C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C46D06E-75A6-4380-ADAA-3BAC4FAD7EC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C46D06E-75A6-4380-ADAA-3BAC4FAD7EC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C46D06E-75A6-4380-ADAA-3BAC4FAD7EC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C46D06E-75A6-4380-ADAA-3BAC4FAD7EC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0F36F8B-3E7D-4745-BB34-06D956989915}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0F36F8B-3E7D-4745-BB34-06D956989915}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0F36F8B-3E7D-4745-BB34-06D956989915}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0F36F8B-3E7D-4745-BB34-06D956989915}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B042883-6B14-4830-9EB8-AD7B20FBD9C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B042883-6B14-4830-9EB8-AD7B20FBD9C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B042883-6B14-4830-9EB8-AD7B20FBD9C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B042883-6B14-4830-9EB8-AD7B20FBD9C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2AD65DC-784C-4978-AE1B-6C94FCA50332}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2AD65DC-784C-4978-AE1B-6C94FCA50332}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2AD65DC-784C-4978-AE1B-6C94FCA50332}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2AD65DC-784C-4978-AE1B-6C94FCA50332}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
