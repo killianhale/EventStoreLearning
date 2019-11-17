@@ -9,6 +9,7 @@ using EventStoreLearning.Appointment.ReadModel;
 using EventStoreLearning.Common.Querying;
 using EventStoreLearning.Common.Utilities;
 using EventStoreLearning.Common.Web.Extensions;
+using EventStoreLearning.Mongo;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -50,19 +51,13 @@ namespace EventStoreLearning.Appointment.QueryApi
                 Version = "v1",
                 Description = "An API for querying appointment data."
             });
+
+            services.Configure<MongoDbConfig>(Configuration.GetSection("AppointmentDB"));
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
-            builder.Register<IMongoDatabase>(context =>
-            {
-                var dbConnectionString = "mongodb://apptApp:apptPassword1@localhost/appointments";
-
-                var client = new MongoClient(dbConnectionString);
-                var database = client.GetDatabase("appointments");
-
-                return database;
-            });
+            builder.ConfigureMongo();
 
             builder.RegisterType<AppointmentQueryMediator>()
                 .As<IQuery>();

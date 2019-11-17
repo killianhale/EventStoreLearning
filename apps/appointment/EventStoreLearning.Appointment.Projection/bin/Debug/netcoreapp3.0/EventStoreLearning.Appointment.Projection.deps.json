@@ -15,6 +15,7 @@
           "EventStoreLearning.Appointment.ReadModel": "1.0.0",
           "EventStoreLearning.Common": "1.0.0",
           "EventStoreLearning.EventStore": "1.0.0",
+          "EventStoreLearning.Mongo": "1.0.0",
           "MediatR": "7.0.0",
           "MediatR.Extensions.Microsoft.DependencyInjection": "7.0.0",
           "Microsoft.Extensions.Configuration.Json": "3.0.0",
@@ -1377,6 +1378,16 @@
         "runtime": {
           "EventStoreLearning.EventStore.dll": {}
         }
+      },
+      "EventStoreLearning.Mongo/1.0.0": {
+        "dependencies": {
+          "Autofac": "4.9.4",
+          "Microsoft.Extensions.Options": "3.0.0",
+          "MongoDB.Driver": "2.9.3"
+        },
+        "runtime": {
+          "EventStoreLearning.Mongo.dll": {}
+        }
       }
     }
   },
@@ -2298,6 +2309,11 @@
       "sha512": ""
     },
     "EventStoreLearning.EventStore/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "EventStoreLearning.Mongo/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

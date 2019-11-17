@@ -50,3 +50,5 @@
 /Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.Projection/bin/Debug/netcoreapp3.0/appsettings.json
 /Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.Projection/bin/Debug/netcoreapp3.0/appsettings.Development.json
 /Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.Projection/bin/Debug/netcoreapp3.0/Microsoft.Extensions.Options.ConfigurationExtensions.dll
+/Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.Projection/bin/Debug/netcoreapp3.0/EventStoreLearning.Mongo.dll
+/Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.Projection/bin/Debug/netcoreapp3.0/EventStoreLearning.Mongo.pdb

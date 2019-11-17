@@ -20,6 +20,9 @@
     <ProjectReference Include="..\..\..\libs\EventStoreLearning.Common.Web\EventStoreLearning.Common.Web.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\libs\EventStoreLearning.Mongo\EventStoreLearning.Mongo.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Autofac" Version="4.9.4" />

@@ -9,6 +9,7 @@ using EventStoreLearning.Common.EventSourcing;
 using EventStoreLearning.Common.Extensions;
 using EventStoreLearning.Common.Utilities;
 using EventStoreLearning.EventStore;
+using EventStoreLearning.Mongo;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -36,21 +37,13 @@ namespace EventStoreLearning.Appointment.Projection
             services.AddMediatR(_assemblies);
 
             services.Configure<EventStoreConfig>(Configuration.GetSection("EventStore"));
+            services.Configure<MongoDbConfig>("appointment-db", Configuration.GetSection("AppointmentDB"));
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.ConfigureEventStore(_assemblies, false, true);
-
-            builder.Register<IMongoDatabase>(context =>
-            {
-                var dbConnectionString = "mongodb://apptApp:apptPassword1@localhost/appointments";
-
-                var client = new MongoClient(dbConnectionString);
-                var database = client.GetDatabase("appointments");
-
-                return database;
-            });
+            builder.ConfigureMongo("appointment-db");
 
             builder.RegisterType<AppointmentProjectionProcessor>()
                 .As<IProjectionProcessor>();

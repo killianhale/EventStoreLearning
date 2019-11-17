@@ -47,7 +47,6 @@
 /Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.QueryApi/obj/Debug/netcoreapp3.0/EventStoreLearning.Appointment.QueryApi.csprojAssemblyReference.cache
 /Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.QueryApi/obj/Debug/netcoreapp3.0/staticwebassets/EventStoreLearning.Appointment.QueryApi.StaticWebAssets.Manifest.cache
 /Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.QueryApi/obj/Debug/netcoreapp3.0/staticwebassets/EventStoreLearning.Appointment.QueryApi.StaticWebAssets.xml
-/Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.QueryApi/obj/Debug/netcoreapp3.0/EventStoreLearning.Appointment.QueryApi.MvcApplicationPartsAssemblyInfo.cs
 /Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.QueryApi/obj/Debug/netcoreapp3.0/EventStoreLearning.Appointment.QueryApi.MvcApplicationPartsAssemblyInfo.cache
 /Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.QueryApi/obj/Debug/netcoreapp3.0/EventStoreLearning.Appointment.QueryApi.AssemblyInfoInputs.cache
 /Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.QueryApi/obj/Debug/netcoreapp3.0/EventStoreLearning.Appointment.QueryApi.AssemblyInfo.cs
@@ -55,3 +54,5 @@
 /Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.QueryApi/obj/Debug/netcoreapp3.0/EventStoreLearning.Appointment.QueryApi.csproj.CopyComplete
 /Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.QueryApi/obj/Debug/netcoreapp3.0/EventStoreLearning.Appointment.QueryApi.dll
 /Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.QueryApi/obj/Debug/netcoreapp3.0/EventStoreLearning.Appointment.QueryApi.pdb
+/Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.QueryApi/bin/Debug/netcoreapp3.0/EventStoreLearning.Mongo.dll
+/Users/matholum/Repos/EventStoreLearning2/apps/appointment/EventStoreLearning.Appointment.QueryApi/bin/Debug/netcoreapp3.0/EventStoreLearning.Mongo.pdb

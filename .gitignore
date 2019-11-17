@@ -1,6 +1,6 @@
 .DS_Store
 .vs
 
-*/logs
-*/bin
-*/obj
+**/logs
+**/bin
+**/obj

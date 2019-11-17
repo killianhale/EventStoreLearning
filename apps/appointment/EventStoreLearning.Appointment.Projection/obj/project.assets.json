@@ -2165,6 +2165,21 @@
         "runtime": {
           "bin/placeholder/EventStoreLearning.EventStore.dll": {}
         }
+      },
+      "EventStoreLearning.Mongo/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.0",
+        "dependencies": {
+          "Autofac": "4.9.4",
+          "Microsoft.Extensions.Options": "3.0.0",
+          "MongoDB.Driver": "2.9.3"
+        },
+        "compile": {
+          "bin/placeholder/EventStoreLearning.Mongo.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/EventStoreLearning.Mongo.dll": {}
+        }
       }
     }
   },
@@ -7017,6 +7032,11 @@
       "type": "project",
       "path": "../../../libs/EventStoreLearning.EventStore/EventStoreLearning.EventStore.csproj",
       "msbuildProject": "../../../libs/EventStoreLearning.EventStore/EventStoreLearning.EventStore.csproj"
+    },
+    "EventStoreLearning.Mongo/1.0.0": {
+      "type": "project",
+      "path": "../../../libs/EventStoreLearning.Mongo/EventStoreLearning.Mongo.csproj",
+      "msbuildProject": "../../../libs/EventStoreLearning.Mongo/EventStoreLearning.Mongo.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -7028,6 +7048,7 @@
       "EventStoreLearning.Appointment.ReadModel >= 1.0.0",
       "EventStoreLearning.Common >= 1.0.0",
       "EventStoreLearning.EventStore >= 1.0.0",
+      "EventStoreLearning.Mongo >= 1.0.0",
       "MediatR >= 7.0.0",
       "MediatR.Extensions.Microsoft.DependencyInjection >= 7.0.0",
       "Microsoft.Extensions.Configuration.Json >= 3.0.0",
@@ -7077,6 +7098,9 @@
             },
             "/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.EventStore/EventStoreLearning.EventStore.csproj": {
               "projectPath": "/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.EventStore/EventStoreLearning.EventStore.csproj"
+            },
+            "/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Mongo/EventStoreLearning.Mongo.csproj": {
+              "projectPath": "/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Mongo/EventStoreLearning.Mongo.csproj"
             }
           }
         }

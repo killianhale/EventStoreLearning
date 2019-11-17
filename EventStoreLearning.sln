@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.Appointm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.Common.Web", "libs\EventStoreLearning.Common.Web\EventStoreLearning.Common.Web.csproj", "{CF2AB3EC-E77C-4138-BFCC-1C2D4C41CDC5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.Mongo", "libs\EventStoreLearning.Mongo\EventStoreLearning.Mongo.csproj", "{4BEA967E-05D8-40BE-81EB-B8976A85B5CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{CF2AB3EC-E77C-4138-BFCC-1C2D4C41CDC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF2AB3EC-E77C-4138-BFCC-1C2D4C41CDC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF2AB3EC-E77C-4138-BFCC-1C2D4C41CDC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BEA967E-05D8-40BE-81EB-B8976A85B5CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BEA967E-05D8-40BE-81EB-B8976A85B5CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BEA967E-05D8-40BE-81EB-B8976A85B5CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BEA967E-05D8-40BE-81EB-B8976A85B5CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{129EB70B-87F6-408D-B047-B52F5E49B7ED} = {FF578C55-9B36-42BA-963D-DDB43BAE402A}

@@ -19,6 +19,16 @@ namespace EventStoreLearning.EventStore
 
         public IEventStoreConnection Connect()
         {
+            if (_config == null)
+            {
+                throw new InvalidOperationException("No EventStore config found!");
+            }
+
+            if (string.IsNullOrEmpty(_config.ConnectionString))
+            {
+                throw new InvalidOperationException("Invalid EventStore config!");
+            }
+
             var connection = EventStoreConnection.Create(_config.ConnectionString);
             connection.AuthenticationFailed += Connection_AuthenticationFailed;
             connection.Closed += Connection_Closed;

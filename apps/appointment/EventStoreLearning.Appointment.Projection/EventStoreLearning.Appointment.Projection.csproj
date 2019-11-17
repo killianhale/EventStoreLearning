@@ -10,6 +10,7 @@
     <ProjectReference Include="..\..\..\libs\appointment\EventStoreLearning.Appointment.ReadModel\EventStoreLearning.Appointment.ReadModel.csproj" />
     <ProjectReference Include="..\..\..\libs\EventStoreLearning.Common\EventStoreLearning.Common.csproj" />
     <ProjectReference Include="..\..\..\libs\EventStoreLearning.EventStore\EventStoreLearning.EventStore.csproj" />
+    <ProjectReference Include="..\..\..\libs\EventStoreLearning.Mongo\EventStoreLearning.Mongo.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MongoDB.Driver" Version="2.9.3" />
