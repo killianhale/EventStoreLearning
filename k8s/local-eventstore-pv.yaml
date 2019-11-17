@@ -11,4 +11,4 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/k8s/data/eventstore"
+    path: "/Users/Shared/k8s/data/eventstore"

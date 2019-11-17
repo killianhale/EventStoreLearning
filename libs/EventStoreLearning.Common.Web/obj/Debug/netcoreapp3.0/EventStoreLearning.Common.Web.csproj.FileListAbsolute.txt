@@ -1,0 +1,15 @@
+/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Common.Web/bin/Debug/netcoreapp3.0/Properties/launchSettings.json
+/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Common.Web/bin/Debug/netcoreapp3.0/EventStoreLearning.Common.Web.deps.json
+/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Common.Web/bin/Debug/netcoreapp3.0/EventStoreLearning.Common.Web.dll
+/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Common.Web/bin/Debug/netcoreapp3.0/EventStoreLearning.Common.Web.pdb
+/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Common.Web/bin/Debug/netcoreapp3.0/EventStoreLearning.Common.dll
+/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Common.Web/bin/Debug/netcoreapp3.0/EventStoreLearning.Common.pdb
+/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Common.Web/obj/Debug/netcoreapp3.0/staticwebassets/EventStoreLearning.Common.Web.StaticWebAssets.Manifest.cache
+/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Common.Web/obj/Debug/netcoreapp3.0/staticwebassets/EventStoreLearning.Common.Web.StaticWebAssets.xml
+/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Common.Web/obj/Debug/netcoreapp3.0/EventStoreLearning.Common.Web.AssemblyInfoInputs.cache
+/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Common.Web/obj/Debug/netcoreapp3.0/EventStoreLearning.Common.Web.AssemblyInfo.cs
+/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Common.Web/obj/Debug/netcoreapp3.0/EventStoreLearning.Common.Web.RazorTargetAssemblyInfo.cache
+/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Common.Web/obj/Debug/netcoreapp3.0/EventStoreLearning.Common.Web.csproj.CopyComplete
+/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Common.Web/obj/Debug/netcoreapp3.0/EventStoreLearning.Common.Web.dll
+/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Common.Web/obj/Debug/netcoreapp3.0/EventStoreLearning.Common.Web.pdb
+/Users/matholum/Repos/EventStoreLearning2/libs/EventStoreLearning.Common.Web/obj/Debug/netcoreapp3.0/EventStoreLearning.Common.Web.csprojAssemblyReference.cache

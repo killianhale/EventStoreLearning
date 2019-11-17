@@ -11,4 +11,4 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/k8s/data/appointmentdb"
+    path: "/Users/Shared/k8s/data/appointmentdb"
