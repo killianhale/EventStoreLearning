@@ -1,19 +1,17 @@
 ﻿using System;
-using EventStoreLearning.Common.EventSourcing;
+using EventStoreLearning.EventSourcing.Commands;
 
 namespace EventStoreLearning.Appointment.Commands
 {
-    public class CreateAppointmentCommand : Command
+    public class CreateAppointmentCommand : ICommand
     {
-        public CreateAppointmentCommand(Guid id, string title, DateTime startTime, TimeSpan duration)
+        public CreateAppointmentCommand(string title, DateTime startTime, TimeSpan duration)
         {
-            Id = id;
             Title = title;
             StartTime = startTime;
             Duration = duration;
         }
 
-        public Guid Id { get; }
         public string Title { get; }
         public DateTime StartTime { get; }
         public TimeSpan Duration { get; }

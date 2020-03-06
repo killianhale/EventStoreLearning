@@ -1,8 +1,10 @@
 ﻿using System;
+using EventStoreLearning.Common.Web.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using ContextRunner.Http;
 
 namespace EventStoreLearning.Common.Web.Extensions
 {
@@ -10,17 +12,17 @@ namespace EventStoreLearning.Common.Web.Extensions
     {
         public static void ConfigureMvc(this IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
+            app.UseRouting();
+
+            app.UseMiddleware<ExceptionMiddleware>();
+            app.AddContextMiddleware();
+
+            if (!env.IsDevelopment())
             {
                 app.UseHsts();
             }
 
             app.UseHttpsRedirection();
-            app.UseRouting();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

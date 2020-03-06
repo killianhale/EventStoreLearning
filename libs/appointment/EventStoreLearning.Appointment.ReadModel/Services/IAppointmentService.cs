@@ -9,6 +9,6 @@ namespace EventStoreLearning.Appointment.ReadModel.Services
 {
     public interface IAppointmentService
     {
-        Task<QueryResponse<RetrieveAllAppointmentsQuery, IList<AppointmentReadModel>>> Handle(QueryRequest<RetrieveAllAppointmentsQuery, IList<AppointmentReadModel>> request, CancellationToken cancellationToken);
+        Task<MediationResponse<RetrieveAllAppointmentsQuery, IList<AppointmentReadModel>>> Handle(MediationRequest<RetrieveAllAppointmentsQuery, IList<AppointmentReadModel>> request, CancellationToken cancellationToken);
     }
 }

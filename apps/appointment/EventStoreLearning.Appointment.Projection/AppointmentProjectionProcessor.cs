@@ -2,34 +2,57 @@
 using System.Threading.Tasks;
 using EventStoreLearning.Appointment.ReadModel.Repositories;
 using EventStoreLearning.Appointment.ReadModels.Models;
-using EventStoreLearning.Common.EventSourcing;
-using EventStoreLearning.EventStore;
+using ContextRunner;
+using EventStoreLearning.EventSourcing;
+using EventStoreLearning.EventSourcing.EventStore;
+using EventStoreLearning.Mediation.EventSourcing.EventStore;
+using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace EventStoreLearning.Appointment.Projection
 {
-    public class AppointmentProjectionProcessor : ProjectionProcessor<Appointment>
+    public class AppointmentProjectionProcessor : MediatedProjectionProcessor<Appointment>
     {
+        private readonly IContextRunner _runner;
         private readonly IProjectionInfoRepository _infoRepo;
         private ProjectionReadModel _info;
 
-        public AppointmentProjectionProcessor(IProjectionInfoRepository infoRepo, IEventRepository repo, IEventMediator eventMediator)
-            :base(repo, eventMediator)
+        public AppointmentProjectionProcessor(
+            IContextRunner runner,
+            ILogger<AppointmentProjectionProcessor> logger,
+            IProjectionInfoRepository infoRepo,
+            IEventRepository repo,
+            IMediator eventMediator
+            ) :base(runner, logger, repo, eventMediator)
         {
+            _runner = runner;
             _infoRepo = infoRepo;
         }
 
         protected async override Task<long> GetStartEventPosition()
         {
-            _info = await _infoRepo.RetrieveProjectionInfo();
+            return await _runner.RunAction(async context =>
+            {
+                context.Logger.Debug($"Getting start position for Aggregate {nameof(Appointment)}");
 
-            return _info.Version + 1;
+                _info = await _infoRepo.RetrieveProjectionInfo();
+
+                context.State.SetParam("projectionInfo", _info);
+
+                return _info.Version + 1;
+            });
         }
 
         protected async override Task SaveEventPosition(long position)
         {
-            _info.Version = position;
+            await _runner.RunAction(async context =>
+            {
+                context.Logger.Debug($"Saving the start position for Aggregate {nameof(Appointment)} as {position}");
 
-            await _infoRepo.UpdateProjectionInfo(_info);
+                _info.Version = position;
+
+                await _infoRepo.UpdateProjectionInfo(_info);
+            });
         }
     }
 }

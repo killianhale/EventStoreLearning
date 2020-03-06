@@ -1,60 +1,68 @@
 ﻿using System;
 using System.Threading.Tasks;
 using EventStoreLearning.Appointment.ReadModels.Models;
-using EventStoreLearning.Common.Logging;
+using ContextRunner.Base;
+using EventStoreLearning.Mongo;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using NLog;
 
 namespace EventStoreLearning.Appointment.ReadModel.Repositories
 {
     public class ProjectionInfoRepository : IProjectionInfoRepository
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly IMongoDocumentClient _mongo;
 
-        private readonly IMongoDatabase _db;
-
-        public ProjectionInfoRepository(IMongoDatabase db)
+        public ProjectionInfoRepository(IMongoDocumentClient mongo)
         {
-            _db = db;
+            _mongo = mongo;
         }
 
         public async Task<ProjectionReadModel> RetrieveProjectionInfo()
         {
-            var collection = _db.GetCollection<ProjectionReadModel>("readmodel");
-
-            ProjectionReadModel info = null;
-
-            var filter = new BsonDocument();
-            using (var cursor = await collection.FindAsync(filter))
+            return await _mongo.ConnectWithContext(async (IMongoDatabase db, ActionContext context) =>
             {
-                info = await cursor.FirstOrDefaultAsync();
-            }
+                context.Logger.Debug("Retrieving projection info from DB");
 
-            if (info == null)
-            {
-                info = new ProjectionReadModel()
+                var collection = db.GetCollection<ProjectionReadModel>("readmodel");
+
+                ProjectionReadModel info = null;
+
+                var filter = new BsonDocument();
+                using (var cursor = await collection.FindAsync(filter))
                 {
-                    Id = Guid.NewGuid(),
-                    Version = -1
-                };
-            }
+                    info = await cursor.FirstOrDefaultAsync();
+                }
 
-            _logger.DebugWithContext("Retrieved projection info from DB", info);
+                if (info == null)
+                {
+                    info = new ProjectionReadModel()
+                    {
+                        Id = Guid.NewGuid(),
+                        Version = -1
+                    };
+                }
 
-            return info;
+                context.State.SetParam("projectionInfo", info);
+
+                return info;
+            });
         }
 
         public async Task UpdateProjectionInfo(ProjectionReadModel model)
         {
-            _logger.DebugWithContext("Updating projection info", model);
+            await _mongo.ConnectWithContext(async (IMongoDatabase db, ActionContext context) =>
+            {
+                context.Logger.Debug("Updating projection info in the DB");
 
-            var collection = _db.GetCollection<ProjectionReadModel>("readmodel");
+                context.State.SetParam("projectionInfo", model);
 
-            var filter = new BsonDocument();
-            var options = new UpdateOptions { IsUpsert = true };
+                var collection = db.GetCollection<ProjectionReadModel>("readmodel");
 
-            await collection.ReplaceOneAsync(filter, model, options);
+                var filter = new BsonDocument();
+                var options = new ReplaceOptions { IsUpsert = true };
+
+                await collection.ReplaceOneAsync(filter, model, options);
+            });
         }
     }
 }

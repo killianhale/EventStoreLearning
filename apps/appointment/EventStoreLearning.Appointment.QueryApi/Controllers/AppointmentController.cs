@@ -35,7 +35,7 @@ namespace EventStoreLearning.Appointment.QueryApi.Controllers
         /// </summary>
         /// <param name="queryMediator"></param>
         /// <param name="mapper"></param>
-        public AppointmentController(IQuery queryMediator, IMapper mapper)
+        public AppointmentController(IMediate queryMediator, IMapper mapper)
             : base(queryMediator)
         {
             _mapper = mapper;
@@ -52,15 +52,13 @@ namespace EventStoreLearning.Appointment.QueryApi.Controllers
         [SwaggerRequestExample(typeof(IList<Contract.Appointment>), typeof(AppointmentListExamples))]
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(AppointmentListExamples))]
         [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(AppointmentListExamples))]
-        public async Task<JsonResult> Get()
+        public async Task<JsonResult> GetAll()
         {
-            //var query = _mapper.Map<CreateAppointmentCommand>(request);
             var query = new RetrieveAllAppointmentsQuery();
 
             var queryResponse = await PublishQuery<RetrieveAllAppointmentsQuery, IList<AppointmentReadModel>> (query);
-            var response = queryResponse.AsApiResponse<RetrieveAllAppointmentsQuery, IList<AppointmentReadModel>, IList<Contract.Appointment>>(200, 400, _mapper);
 
-            return response;
+            return CreateApiResponse<IList<AppointmentReadModel>, IList<Contract.Appointment>>(queryResponse.Response, 200, _mapper);
         }
 
         //// GET api/values/5

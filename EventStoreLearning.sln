@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.Appointm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.Appointment.ReadModel", "libs\appointment\EventStoreLearning.Appointment.ReadModel\EventStoreLearning.Appointment.ReadModel.csproj", "{B822E9FB-D2B8-4E55-83FC-957F046AAFF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.EventStore", "libs\EventStoreLearning.EventStore\EventStoreLearning.EventStore.csproj", "{173A1D44-D8F7-4EAC-80AA-B7023FD81E7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.EventSourcing.EventStore", "libs\EventStoreLearning.EventSourcing.EventStore\EventStoreLearning.EventSourcing.EventStore.csproj", "{173A1D44-D8F7-4EAC-80AA-B7023FD81E7F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.Common", "libs\EventStoreLearning.Common\EventStoreLearning.Common.csproj", "{415AA27C-ED0E-43AC-8A27-F4D392FE5DF4}"
 EndProject
@@ -20,6 +20,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.Common.Web", "libs\EventStoreLearning.Common.Web\EventStoreLearning.Common.Web.csproj", "{CF2AB3EC-E77C-4138-BFCC-1C2D4C41CDC5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.Mongo", "libs\EventStoreLearning.Mongo\EventStoreLearning.Mongo.csproj", "{4BEA967E-05D8-40BE-81EB-B8976A85B5CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.DependencyInjection.EventStore", "libs\EventStoreLearning.DependencyInjection.EventStore\EventStoreLearning.DependencyInjection.EventStore.csproj", "{045E4E30-1371-4335-90C5-0FEEB70646FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.EventSourcing", "libs\EventStoreLearning.EventSourcing\EventStoreLearning.EventSourcing.csproj", "{35253697-2367-4BDF-A8C8-5DC376E5B580}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.Exceptions", "libs\EventStoreLearning.Exceptions\EventStoreLearning.Exceptions.csproj", "{68B17DF1-FF4D-448C-B9E1-B726A258E2FF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventStoreLearning.Mediation.EventSourcing.EventStore", "libs\EventStoreLearning.Mediation.EventSourcing.EventStore\EventStoreLearning.Mediation.EventSourcing.EventStore.csproj", "{8DB80821-ECCF-4084-AFA8-504E3B18F1B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +71,22 @@ Global
 		{4BEA967E-05D8-40BE-81EB-B8976A85B5CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BEA967E-05D8-40BE-81EB-B8976A85B5CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BEA967E-05D8-40BE-81EB-B8976A85B5CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{045E4E30-1371-4335-90C5-0FEEB70646FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{045E4E30-1371-4335-90C5-0FEEB70646FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{045E4E30-1371-4335-90C5-0FEEB70646FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{045E4E30-1371-4335-90C5-0FEEB70646FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35253697-2367-4BDF-A8C8-5DC376E5B580}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35253697-2367-4BDF-A8C8-5DC376E5B580}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35253697-2367-4BDF-A8C8-5DC376E5B580}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35253697-2367-4BDF-A8C8-5DC376E5B580}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68B17DF1-FF4D-448C-B9E1-B726A258E2FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68B17DF1-FF4D-448C-B9E1-B726A258E2FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68B17DF1-FF4D-448C-B9E1-B726A258E2FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68B17DF1-FF4D-448C-B9E1-B726A258E2FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DB80821-ECCF-4084-AFA8-504E3B18F1B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DB80821-ECCF-4084-AFA8-504E3B18F1B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DB80821-ECCF-4084-AFA8-504E3B18F1B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DB80821-ECCF-4084-AFA8-504E3B18F1B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{129EB70B-87F6-408D-B047-B52F5E49B7ED} = {FF578C55-9B36-42BA-963D-DDB43BAE402A}

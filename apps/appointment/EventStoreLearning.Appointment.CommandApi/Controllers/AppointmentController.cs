@@ -10,10 +10,11 @@ using EventStoreLearning.Common.Web;
 using EventStoreLearning.Common.Web.Models;
 using EventStoreLearning.Common.Web.Extensions;
 using EventStoreLearning.Appointment.Commands;
-using EventStoreLearning.Common.EventSourcing;
+using EventStoreLearning.EventSourcing.Commands;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Filters;
+using MediatR;
 
 namespace EventStoreLearning.Appointment.CommandApi.Controllers
 {
@@ -32,10 +33,10 @@ namespace EventStoreLearning.Appointment.CommandApi.Controllers
         /// <summary>
         /// Ctor params provided by DI...
         /// </summary>
-        /// <param name="commandMediator"></param>
+        /// <param name="mediator"></param>
         /// <param name="mapper"></param>
-        public AppointmentController(ICommandMediator commandMediator, IMapper mapper)
-            : base(commandMediator)
+        public AppointmentController(IMediator mediator, IMapper mapper)
+            : base(mediator)
         {
             _mapper = mapper;
         }
@@ -67,10 +68,9 @@ namespace EventStoreLearning.Appointment.CommandApi.Controllers
         {
             var command = _mapper.Map<CreateAppointmentCommand>(request);
 
-            var cmdResponse = await PublishCommand(command);
-            var response = cmdResponse.AsApiResponse(201, 409);
+            var id = await PublishCommand(command);
 
-            return response;
+            return CreateApiResponse(id, StatusCodes.Status201Created);
         }
 
         //// PUT api/values/5

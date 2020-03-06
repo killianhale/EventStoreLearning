@@ -38,16 +38,14 @@ namespace EventStoreLearning.Appointment.QueryApi
                 .UseServiceProviderFactory(new AutofacServiceProviderFactory())
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseKestrel(options => options.AddServerHeader = false);
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.ConfigureLogging(logging =>
-                    {
-                        //logging.ClearProviders();
-                        //logging.AddConsole();
-                        //logging.AddDebug();
-                        logging.SetMinimumLevel(LogLevel.Trace);
-                    });
-                    webBuilder.UseNLog();
-                });
+                })
+                .ConfigureLogging(logging =>
+                {
+                    logging.SetMinimumLevel(LogLevel.Trace);
+                })
+                .UseNLog();
     }
 #pragma warning restore CS1591
 }

@@ -3,29 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EventStoreLearning.Common.EventSourcing;
+using EventStoreLearning.EventSourcing.Commands;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventStoreLearning.Common.Web
 {
     public abstract class BaseCommandController : Controller
     {
-        protected BaseCommandController(ICommandMediator commandMediator)
+        protected BaseCommandController(IMediator mediator)
         {
-            CommandMediator = commandMediator;
+            Mediator = mediator;
         }
 
-        protected ICommandMediator CommandMediator { get; }
+        protected IMediator Mediator { get; }
 
         [NonAction]
-        public async Task<CommandResponse<TCommand>> PublishCommand<TCommand>(TCommand command) where TCommand : Command
+        public async Task<Guid> PublishCommand<TCommand>(TCommand command) where TCommand : ICommand
         {
-            CommandResponse<TCommand> response;
+            var response = Guid.Empty;
 
             using (var tokenSource = new CancellationTokenSource())
             {
-                response = await CommandMediator.PublishCommand(command, tokenSource.Token);
+                response = await Mediator.Send(command, tokenSource.Token);
             }
+
+            return response;
+        }
+
+        [NonAction]
+        public JsonResult CreateApiResponse(object successBody, int responseCode = StatusCodes.Status200OK)
+        {
+            var response = new JsonResult(successBody) { StatusCode = responseCode };
 
             return response;
         }

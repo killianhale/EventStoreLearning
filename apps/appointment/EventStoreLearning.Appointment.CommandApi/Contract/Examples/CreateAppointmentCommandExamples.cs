@@ -20,7 +20,6 @@ namespace EventStoreLearning.Appointment.CommandApi.Contract.Examples
         CreateAppointmentCommand IExamplesProvider<CreateAppointmentCommand>.GetExamples()
         {
             return new CreateAppointmentCommand(
-                Guid.NewGuid(),
                 "Sample Meeting #1",
                 DateTime.UtcNow,
                 TimeSpan.FromMinutes(30)

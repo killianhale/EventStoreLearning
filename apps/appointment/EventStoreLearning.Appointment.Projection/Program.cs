@@ -1,6 +1,8 @@
 ﻿using System;
 using Autofac.Extensions.DependencyInjection;
-using EventStoreLearning.Common.EventSourcing;
+using ContextRunner;
+using EventStoreLearning.EventSourcing;
+using EventStoreLearning.Exceptions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -26,8 +28,14 @@ namespace EventStoreLearning.Appointment.Projection
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Stopped program because of exception");
-                throw;
+                var lookupException = ex is ContextException ? ex.InnerException : ex;
+
+                var reasonCode = lookupException is ReasonCodeException reasonEx ? reasonEx.ReasonCode : "?";
+                var message = lookupException.Message;
+
+                logger.Error($"Stopped program because of exception!\n\n{reasonCode}: {message}");
+
+                Environment.Exit(1);
             }
             finally
             {
@@ -50,7 +58,7 @@ namespace EventStoreLearning.Appointment.Projection
                     loggingBuilder.AddNLog(config);
                 });
 
-            var factory = new AutofacServiceProviderFactory();
+        var factory = new AutofacServiceProviderFactory();
 
             var startup = new Startup(config);
 

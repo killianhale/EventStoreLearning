@@ -2,50 +2,58 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EventStoreLearning.Appointment.ReadModels.Models;
-using EventStoreLearning.Common.Logging;
+using ContextRunner.Base;
+using EventStoreLearning.Mongo;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using NLog;
 
 namespace EventStoreLearning.Appointment.ReadModel.Repositories
 {
     public class AppointmentRepository : IAppointmentRepository
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly IMongoDocumentClient _mongo;
 
-        private readonly IMongoDatabase _db;
-
-        public AppointmentRepository(IMongoDatabase db)
+        public AppointmentRepository(IMongoDocumentClient mongo)
         {
-            _db = db;
+            _mongo = mongo;
         }
 
         public async Task CreateAppointment(AppointmentReadModel model)
         {
-            _logger.DebugWithContext("Adding new appointment to the DB", model);
+            await _mongo.ConnectWithContext(async (IMongoDatabase db, ActionContext context) =>
+            {
+                context.Logger.Debug("Adding new appointment to the DB");
 
-            var collection = _db.GetCollection<AppointmentReadModel>("appointments");
+                context.State.SetParam("appointment", model);
 
-            await collection.InsertOneAsync(model);
+                var collection = db.GetCollection<AppointmentReadModel>("appointments");
+
+                await collection.InsertOneAsync(model);
+            });
         }
 
         public async Task<IList<AppointmentReadModel>> RetrieveAllAppointments()
         {
-            _logger.Debug("Retrieving all appointments from DB...");
-
-            var collection = _db.GetCollection<AppointmentReadModel>("appointments");
-            var filter = new BsonDocument();
-
-            var result = new List<AppointmentReadModel>();
-
-            using (var cursor = await collection.FindAsync(filter))
+            return await _mongo.ConnectWithContext(async (IMongoDatabase db, ActionContext context) =>
             {
-                result = await cursor.ToListAsync();
-            }
+                context.Logger.Debug("Retrieving all appointments from DB");
 
-            _logger.Debug($"{result.Count} appointments found.");
+                var collection = db.GetCollection<AppointmentReadModel>("appointments");
+                var filter = new BsonDocument();
 
-            return result;
+                var result = new List<AppointmentReadModel>();
+
+                using (var cursor = await collection.FindAsync(filter))
+                {
+                    result = await cursor.ToListAsync();
+                }
+
+                context.Logger.Debug($"{result.Count} appointments found.");
+
+                context.State.SetParam("appointments", result);
+
+                return result;
+            });
         }
     }
 }

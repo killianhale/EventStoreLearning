@@ -11,9 +11,7 @@ namespace EventStoreLearning.Appointment.CommandApi
         public MapperProfile()
         {
             CreateMap<CreateAppointmentRequest, CreateAppointmentCommand>()
-                .ConstructUsing(req => new CreateAppointmentCommand(Guid.NewGuid(), req.Title, req.StartTime, TimeSpan.FromMinutes(req.DurationMinutes)));
-                //.ForMember(dest => dest.Id, opt => opt.MapFrom(dto => Guid.NewGuid()))
-                //.ForMember(dest => dest.Duration, opt => opt.MapFrom(dto => TimeSpan.FromMinutes(dto.DurationMinutes)));
+                .ConstructUsing(req => new CreateAppointmentCommand(req.Title, req.StartTime, TimeSpan.FromMinutes(req.DurationMinutes)));
 
             CreateMap<Exception, ErrorResponse>();
         }

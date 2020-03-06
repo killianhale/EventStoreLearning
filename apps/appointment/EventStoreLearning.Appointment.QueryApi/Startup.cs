@@ -9,6 +9,8 @@ using EventStoreLearning.Appointment.ReadModel;
 using EventStoreLearning.Common.Querying;
 using EventStoreLearning.Common.Utilities;
 using EventStoreLearning.Common.Web.Extensions;
+using ContextRunner;
+using ContextRunner.NLog;
 using EventStoreLearning.Mongo;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -57,10 +59,12 @@ namespace EventStoreLearning.Appointment.QueryApi
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
+            builder.RegisterType<NlogContextRunner>().As<IContextRunner>();
+
             builder.ConfigureMongo();
 
             builder.RegisterType<AppointmentQueryMediator>()
-                .As<IQuery>();
+                .As<IMediate>();
 
             builder.RegisterAssemblyTypes(_assemblies)
                .Where(t => t.Name.EndsWith("Repository", StringComparison.CurrentCulture))

@@ -5,17 +5,18 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 using EventStoreLearning.Appointment.ReadModel;
-using EventStoreLearning.Common.EventSourcing;
-using EventStoreLearning.Common.Extensions;
+using EventStoreLearning.EventSourcing;
 using EventStoreLearning.Common.Utilities;
-using EventStoreLearning.EventStore;
+using EventStoreLearning.EventSourcing.EventStore;
 using EventStoreLearning.Mongo;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
-
+using ContextRunner.NLog;
+using ContextRunner;
+using EventStoreLearning.DependencyInjection.EventStore;
 
 namespace EventStoreLearning.Appointment.Projection
 {
@@ -38,10 +39,13 @@ namespace EventStoreLearning.Appointment.Projection
 
             services.Configure<EventStoreConfig>(Configuration.GetSection("EventStore"));
             services.Configure<MongoDbConfig>("appointment-db", Configuration.GetSection("AppointmentDB"));
+            services.Configure<NlogContextRunnerConfig>(Configuration.GetSection("NlogContext"));
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
+            builder.RegisterType<NlogContextRunner>().As<IContextRunner>();
+
             builder.ConfigureEventStore(_assemblies, false, true);
             builder.ConfigureMongo("appointment-db");
 

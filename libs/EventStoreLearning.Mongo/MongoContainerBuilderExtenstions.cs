@@ -12,7 +12,7 @@ namespace EventStoreLearning.Mongo
     {
         public static void ConfigureMongo(this ContainerBuilder builder, string configName = null)
         {
-            builder.Register<IMongoDatabase>(context =>
+            builder.Register<MongoDbConfig>(context =>
             {
                 MongoDbConfig config = null;
 
@@ -26,21 +26,11 @@ namespace EventStoreLearning.Mongo
                     config = configAccesor.Get(configName);
                 }
 
-                if(config == null)
-                {
-                    throw new InvalidOperationException("No MongoDB config found!");
-                }
-
-                if(string.IsNullOrEmpty(config.ConnectionString) || string.IsNullOrEmpty(config.DatabaseName))
-                {
-                    throw new InvalidOperationException("Invalid MongoDB config!");
-                }
-
-                var client = new MongoClient(config.ConnectionString);
-                var database = client.GetDatabase(config.DatabaseName);
-
-                return database;
+                return config;
             });
+
+            builder.RegisterType<MongoDocumentClient>()
+                .As<IMongoDocumentClient>();
         }
     }
 }

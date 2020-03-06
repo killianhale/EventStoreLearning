@@ -11,11 +11,17 @@ namespace EventStoreLearning.Common.Web.Models
         /// </summary>
         /// <param name="message"></param>
         /// <param name="stackTrace"></param>
-        public ErrorResponse(string message, string stackTrace = null)
+        public ErrorResponse(string message, string reasonCode = null, string stackTrace = null)
         {
             Message = message;
+            ReasonCode = reasonCode;
             StackTrace = stackTrace;
         }
+
+        /// <summary>
+        /// A unique code representing the reason for the error
+        /// </summary>
+        public string ReasonCode { get; }
 
         /// <summary>
         /// A summary of the error

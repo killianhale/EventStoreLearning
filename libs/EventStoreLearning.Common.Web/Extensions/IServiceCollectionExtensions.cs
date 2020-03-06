@@ -18,6 +18,7 @@ namespace EventStoreLearning.Common.Web.Extensions
                 options.SerializerSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat;
                 options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
                 options.SerializerSettings.DateFormatString = "YYYY-MM-DDTHH:mm:ss.sssZ";
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             })
             .AddJsonOptions(options =>
             {

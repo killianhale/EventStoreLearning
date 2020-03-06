@@ -4,39 +4,44 @@ using System.Threading.Tasks;
 using EventStoreLearning.Appointment.Events;
 using EventStoreLearning.Appointment.ReadModel.Repositories;
 using EventStoreLearning.Appointment.ReadModels.Models;
-using EventStoreLearning.Common.EventSourcing;
-using EventStoreLearning.Common.Logging;
+using EventStoreLearning.EventSourcing;
 using MediatR;
-using NLog;
+using ContextRunner;
 
 namespace EventStoreLearning.Appointment.Projection
 {
     public class AppointmentEventHandler : IEventHandler<AppointmentCreatedEvent>
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
+        private readonly IContextRunner _runner;
         private readonly IAppointmentRepository _appointmentRepo;
 
-        public AppointmentEventHandler(IAppointmentRepository appointmentRepo)
+        public AppointmentEventHandler(IContextRunner runner, IAppointmentRepository appointmentRepo)
         {
+            _runner = runner;
             _appointmentRepo = appointmentRepo;
         }
 
-        public async Task<Unit> Handle(EventRequest<AppointmentCreatedEvent> request, CancellationToken cancellationToken)
+        public async Task<Guid> Handle(AppointmentCreatedEvent @event, CancellationToken cancellationToken)
         {
-            _logger.DebugWithContext($"Handling event {nameof(AppointmentCreatedEvent)} for Aggregate {nameof(Appointment)}", request.Event);
-
-            var model = new AppointmentReadModel()
+            await _runner.RunAction(async context =>
             {
-                Title = request.Event.Title,
-                StartTime = request.Event.StartTime,
-                Duration = request.Event.Duration.ToString(),
-                Id = request.Event.AggregateId
-            };
+                context.State.SetParam("eventType", nameof(AppointmentCreatedEvent));
+                context.State.SetParam("event", @event);
 
-            await _appointmentRepo.CreateAppointment(model);
+                context.Logger.Information($"Handling event {nameof(AppointmentCreatedEvent)} for Aggregate {nameof(Appointment)}");
 
-            return new Unit();
+                var model = new AppointmentReadModel()
+                {
+                    Title = @event.Title,
+                    StartTime = @event.StartTime,
+                    Duration = @event.Duration.ToString(),
+                    Id = @event.AggregateId
+                };
+
+                await _appointmentRepo.CreateAppointment(model);
+            });
+
+            return @event.AggregateId;
         }
     }
 }

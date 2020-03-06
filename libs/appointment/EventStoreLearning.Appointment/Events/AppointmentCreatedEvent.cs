@@ -1,19 +1,21 @@
 ﻿using System;
-using EventStoreLearning.Common.EventSourcing;
+using EventStoreLearning.EventSourcing;
 using Newtonsoft.Json;
 
 namespace EventStoreLearning.Appointment.Events
 {
-    [JsonObject(MemberSerialization.OptIn)]
-    public class AppointmentCreatedEvent : Event
+    public class AppointmentCreatedEvent : IEvent
     {
-        public AppointmentCreatedEvent(Guid id, string title, DateTime startTime, TimeSpan duration)
+        public AppointmentCreatedEvent(Guid aggregateId, string title, DateTime startTime, TimeSpan duration)
         {
-            AggregateId = id;
+            AggregateId = aggregateId;
             Title = title;
             StartTime = startTime;
             Duration = duration;
         }
+
+        [JsonProperty]
+        public Guid AggregateId { get; }
 
         [JsonProperty]
         public string Title { get; }

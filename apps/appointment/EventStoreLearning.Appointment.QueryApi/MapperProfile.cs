@@ -13,7 +13,6 @@ namespace EventStoreLearning.Appointment.QueryApi
         public MapperProfile()
         {
             CreateMap<AppointmentReadModel, Contract.Appointment>()
-                //.ForMember(dest => dest.Id, opt => opt.MapFrom(dto => Guid.NewGuid()))
                 .ForMember(dest => dest.DurationMinutes, opt => opt.MapFrom(dto => TimeSpan.Parse(dto.Duration).TotalMinutes));
 
             CreateMap<Exception, ErrorResponse>();
