@@ -1,9 +1,9 @@
 ﻿using System;
-using EventStoreLearning.EventSourcing.Commands;
+using AggregateOP.MediatR;
 
 namespace EventStoreLearning.Appointment.Commands
 {
-    public class ChangeAppointmentCommand : ICommand
+    public class ChangeAppointmentCommand : IMediatedCommand
     {
         public ChangeAppointmentCommand(Guid id, long version, string title, DateTime? startTime, TimeSpan? duration)
         {

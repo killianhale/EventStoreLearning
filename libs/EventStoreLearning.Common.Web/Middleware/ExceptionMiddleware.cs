@@ -3,10 +3,10 @@ using System.Net;
 using System.Threading.Tasks;
 using EventStoreLearning.Common.Web.Models;
 using ContextRunner;
-using EventStoreLearning.EventSourcing.Exceptions;
-using EventStoreLearning.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using ReasonCodeExceptions;
+using AggregateOP.Exceptions;
 
 namespace EventStoreLearning.Common.Web.Middleware
 {
@@ -32,46 +32,44 @@ namespace EventStoreLearning.Common.Web.Middleware
                     throw;
                 }
 
-                var lookupException = ex is ContextException ? ex.InnerException : ex;
-
                 var statusCode = HttpStatusCode.InternalServerError;
-                var reasonCode = lookupException is ReasonCodeException reasonEx ? reasonEx.ReasonCode : "?";
-                var message = lookupException.Message;
-                var stackTrace = lookupException.StackTrace;
+                var reasonCode = ex is ReasonCodeException reasonEx ? reasonEx.ReasonCode : "?";
+                var message = ex.Message;
+                var stackTrace = ex.StackTrace;
 
-                if (lookupException is ServiceTimeoutException || lookupException is TimeoutException)
+                if (ex is ServiceTimeoutException || ex is TimeoutException)
                 {
                     statusCode = HttpStatusCode.GatewayTimeout;
                 }
-                else if (lookupException is EnvironmentException)
+                else if (ex is EnvironmentException)
                 {
                     statusCode = HttpStatusCode.InternalServerError;
                 }
-                else if (lookupException is DataNotFoundException
-                    || lookupException is IAggregateDependencyException
-                    || lookupException is IAggregateNotFoundException)
+                else if (ex is DataNotFoundException
+                    || ex is IAggregateDependencyException
+                    || ex is IAggregateNotFoundException)
                 {
                     statusCode = HttpStatusCode.NotFound;
                 }
-                else if (lookupException is DataConflictException || lookupException is IAggregateConflictException)
+                else if (ex is DataConflictException || ex is IAggregateConflictException)
                 {
                     statusCode = HttpStatusCode.Conflict;
                 }
-                else if (lookupException is MiscDataException
-                    || lookupException is ArgumentException
-                    || lookupException is IAggregateRootException)
+                else if (ex is MiscDataException
+                    || ex is ArgumentException
+                    || ex is IAggregateRootException)
                 {
                     statusCode = HttpStatusCode.BadRequest;
                 }
-                else if (lookupException is DataException)
+                else if (ex is DataException)
                 {
                     statusCode = HttpStatusCode.InternalServerError;
                 }
-                else if (lookupException is PermissionsException)
+                else if (ex is PermissionsException)
                 {
                     statusCode = HttpStatusCode.Forbidden;
                 }
-                else if (lookupException is AuthenticationException)
+                else if (ex is AuthenticationException)
                 {
                     statusCode = HttpStatusCode.Unauthorized;
                 }

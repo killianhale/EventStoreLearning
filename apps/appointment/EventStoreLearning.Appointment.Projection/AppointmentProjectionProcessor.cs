@@ -3,11 +3,10 @@ using System.Threading.Tasks;
 using EventStoreLearning.Appointment.ReadModel.Repositories;
 using EventStoreLearning.Appointment.ReadModels.Models;
 using ContextRunner;
-using EventStoreLearning.EventSourcing;
-using EventStoreLearning.EventSourcing.EventStore;
-using EventStoreLearning.Mediation.EventSourcing.EventStore;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using AggregateOP.MediatR;
+using AggregateOP.Base;
 
 namespace EventStoreLearning.Appointment.Projection
 {

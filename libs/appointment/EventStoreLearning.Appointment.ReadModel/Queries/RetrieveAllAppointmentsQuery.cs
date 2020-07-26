@@ -1,6 +1,10 @@
-﻿namespace EventStoreLearning.Appointment.ReadModel.Queries
+﻿using System.Collections.Generic;
+using EventStoreLearning.Appointment.ReadModels.Models;
+using MediatR;
+
+namespace EventStoreLearning.Appointment.ReadModel.Queries
 {
-    public class RetrieveAllAppointmentsQuery
+    public class RetrieveAllAppointmentsQuery : IRequest<IList<AppointmentReadModel>>
     {
     }
 }

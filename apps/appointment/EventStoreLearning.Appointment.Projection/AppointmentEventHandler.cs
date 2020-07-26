@@ -4,13 +4,16 @@ using System.Threading.Tasks;
 using EventStoreLearning.Appointment.Events;
 using EventStoreLearning.Appointment.ReadModel.Repositories;
 using EventStoreLearning.Appointment.ReadModels.Models;
-using EventStoreLearning.EventSourcing;
 using MediatR;
 using ContextRunner;
+using AggregateOP.MediatR;
 
 namespace EventStoreLearning.Appointment.Projection
 {
-    public class AppointmentEventHandler : IEventHandler<AppointmentCreatedEvent>
+    public class AppointmentEventHandler :
+        IEventHandler<AppointmentCreatedEvent>,
+        IEventHandler<AppointmentChangedEvent>,
+        IEventHandler<AppointmentCancelledEvent>
     {
         private readonly IContextRunner _runner;
         private readonly IAppointmentRepository _appointmentRepo;
@@ -21,27 +24,57 @@ namespace EventStoreLearning.Appointment.Projection
             _appointmentRepo = appointmentRepo;
         }
 
-        public async Task<Guid> Handle(AppointmentCreatedEvent @event, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(MediatedEventModel<AppointmentCreatedEvent> @event, CancellationToken cancellationToken)
         {
             await _runner.RunAction(async context =>
             {
-                context.State.SetParam("eventType", nameof(AppointmentCreatedEvent));
-                context.State.SetParam("event", @event);
-
                 context.Logger.Information($"Handling event {nameof(AppointmentCreatedEvent)} for Aggregate {nameof(Appointment)}");
 
                 var model = new AppointmentReadModel()
                 {
-                    Title = @event.Title,
-                    StartTime = @event.StartTime,
-                    Duration = @event.Duration.ToString(),
-                    Id = @event.AggregateId
+                    Title = @event.Event.Title,
+                    StartTime = @event.Event.StartTime,
+                    Duration = (int)@event.Event.Duration.TotalMinutes,
+                    Id = @event.Event.AggregateId,
+                    Version = @event.Version
                 };
 
                 await _appointmentRepo.CreateAppointment(model);
             });
 
-            return @event.AggregateId;
+            //return @event.Event.AggregateId;
+            return new Unit();
+        }
+
+        public async Task<Unit> Handle(MediatedEventModel<AppointmentChangedEvent> model, CancellationToken cancellationToken)
+        {
+            await _runner.RunAction(async context =>
+            {
+                context.Logger.Information($"Handling event {nameof(AppointmentChangedEvent)} for Aggregate {nameof(Appointment)}");
+
+                await _appointmentRepo.UpdateAppointment(
+                    model.Event.AggregateId,
+                    model.Version,
+                    model.Event.Title,
+                    model.Event.StartTime,
+                    model.Event.Duration);
+            });
+
+            //return model.Event.AggregateId;
+            return new Unit();
+        }
+
+        public async Task<Unit> Handle(MediatedEventModel<AppointmentCancelledEvent> model, CancellationToken cancellationToken)
+        {
+            await _runner.RunAction(async context =>
+            {
+                context.Logger.Information($"Handling event {nameof(AppointmentCancelledEvent)} for Aggregate {nameof(Appointment)}");
+
+                await _appointmentRepo.DeleteAppointment(model.Event.AggregateId);
+            });
+
+            //return model.Event.AggregateId;
+            return new Unit();
         }
     }
 }

@@ -1,20 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using Contract = EventStoreLearning.Appointment.QueryApi.Contract;
-using EventStoreLearning.Appointment.QueryApi.Contract.Examples;
-using EventStoreLearning.Appointment.ReadModel;
 using EventStoreLearning.Appointment.ReadModel.Queries;
 using EventStoreLearning.Appointment.ReadModels.Models;
-using EventStoreLearning.Common.Web.Extensions;
-using EventStoreLearning.Common.Web.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Filters;
-using EventStoreLearning.Common.Querying;
 using EventStoreLearning.Common.Web;
+using EventStoreLearning.Common.Web.Extensions;
 
 namespace EventStoreLearning.Appointment.QueryApi.Controllers
 {
@@ -22,43 +13,34 @@ namespace EventStoreLearning.Appointment.QueryApi.Controllers
     /// Controller for all Appointment related endpoints
     /// </summary>
     [Route("v1/[controller]")]
-    [Consumes("application/json")]
-    [Produces("application/json")]
-    [ProducesErrorResponseType(typeof(ErrorResponse))]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
-    public class AppointmentController : BaseQueryController
+    public class AppointmentController : Controller
     {
-        private readonly IMapper _mapper;
+        private readonly IMediatedDataContractFactory _dataContractFactory;
 
         /// <summary>
         /// Ctor params provided by DI...
         /// </summary>
-        /// <param name="queryMediator"></param>
-        /// <param name="mapper"></param>
-        public AppointmentController(IMediate queryMediator, IMapper mapper)
-            : base(queryMediator)
+        /// <param name="dataContractFactory"></param>
+        public AppointmentController(IMediatedDataContractFactory dataContractFactory)
         {
-            _mapper = mapper;
+            _dataContractFactory = dataContractFactory;
         }
 
         /// <summary>
         /// Get all appointments
         /// </summary>
         /// <returns>A list of appointments</returns>
-        /// <response code="200">Returns a list of appintments</response>
+        /// <response code="200">Returns a list of appointments</response>
         /// <response code="400">Returns an exception if there is a problem</response>
         [HttpGet]
-        [ProducesResponseType(typeof(IList<Contract.Appointment>), StatusCodes.Status200OK)]
-        [SwaggerRequestExample(typeof(IList<Contract.Appointment>), typeof(AppointmentListExamples))]
-        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(AppointmentListExamples))]
-        [SwaggerResponseExample(StatusCodes.Status400BadRequest, typeof(AppointmentListExamples))]
-        public async Task<JsonResult> GetAll()
+        public async Task<IList<Contract.Appointment>> GetAll()
         {
-            var query = new RetrieveAllAppointmentsQuery();
+            var test = await _dataContractFactory.CreateContract<IList<Contract.Appointment>>()
+                .Mediate<RetrieveAllAppointmentsQuery, IList<AppointmentReadModel>>()
+                .Invoke();
+                //.CreateApiResponse();
 
-            var queryResponse = await PublishQuery<RetrieveAllAppointmentsQuery, IList<AppointmentReadModel>> (query);
-
-            return CreateApiResponse<IList<AppointmentReadModel>, IList<Contract.Appointment>>(queryResponse.Response, 200, _mapper);
+            return test;
         }
 
         //// GET api/values/5

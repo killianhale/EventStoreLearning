@@ -1,15 +1,17 @@
 ﻿using System;
-using EventStoreLearning.EventSourcing.Commands;
+using AggregateOP.MediatR;
 
 namespace EventStoreLearning.Appointment.Commands
 {
-    public class CancelAppointmentCommand : ICommand
+    public class CancelAppointmentCommand : IMediatedCommand
     {
-        public CancelAppointmentCommand(Guid id)
+        public CancelAppointmentCommand(Guid id, long version)
         {
             Id = id;
+            Version = version;
         }
 
         public Guid Id { get; }
+        public long Version { get; }
     }
 }

@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using EventStoreLearning.Appointment.Commands;
-using EventStoreLearning.EventSourcing;
-using EventStoreLearning.EventSourcing.Commands;
 using ContextRunner;
-using MediatR;
+using AggregateOP.MediatR;
+using AggregateOP;
 
 namespace EventStoreLearning.Appointment
 {
-    public class AppointmentCommandHandler : ICommandHandler<CreateAppointmentCommand>, ICommandHandler<ChangeAppointmentCommand>
+    public class AppointmentCommandHandler :
+        ICommandHandler<CreateAppointmentCommand>,
+        ICommandHandler<ChangeAppointmentCommand>,
+        ICommandHandler<CancelAppointmentCommand>
     {
         private readonly IContextRunner _runner;
         private readonly IAggregateOrchestrator _aggregateOrchestrator;
@@ -56,6 +57,24 @@ namespace EventStoreLearning.Appointment
                     });
 
             }, nameof(ChangeAppointmentCommand));
+        }
+
+        public async Task<Guid> Handle(CancelAppointmentCommand command, CancellationToken cancellationToken)
+        {
+            return await _runner.RunAction(async context =>
+            {
+                context.State.SetParam("commandType", nameof(CancelAppointmentCommand));
+                context.State.SetParam("command", command);
+
+                context.Logger.Debug($"Handling command {nameof(CancelAppointmentCommand)} for Aggregate {nameof(Appointment)}");
+
+                return await _aggregateOrchestrator
+                    .Change<Appointment>(command.Id, command.Version, (deps, aggregate) =>
+                    {
+                        aggregate.Cancel();
+                    });
+
+            }, nameof(CancelAppointmentCommand));
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using System;
+using AggregateOP;
 using Autofac.Extensions.DependencyInjection;
 using ContextRunner;
-using EventStoreLearning.EventSourcing;
-using EventStoreLearning.Exceptions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog;
 using NLog.Extensions.Logging;
+using ReasonCodeExceptions;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace EventStoreLearning.Appointment.Projection
@@ -28,10 +28,8 @@ namespace EventStoreLearning.Appointment.Projection
             }
             catch (Exception ex)
             {
-                var lookupException = ex is ContextException ? ex.InnerException : ex;
-
-                var reasonCode = lookupException is ReasonCodeException reasonEx ? reasonEx.ReasonCode : "?";
-                var message = lookupException.Message;
+                var reasonCode = ex is ReasonCodeException reasonEx ? reasonEx.ReasonCode : "?";
+                var message = ex.Message;
 
                 logger.Error($"Stopped program because of exception!\n\n{reasonCode}: {message}");
 

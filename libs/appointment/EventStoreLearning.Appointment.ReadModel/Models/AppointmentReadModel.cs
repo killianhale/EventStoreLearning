@@ -10,8 +10,9 @@ namespace EventStoreLearning.Appointment.ReadModels.Models
         [BsonId(IdGenerator = typeof(GuidGenerator))]
         [BsonRepresentation(BsonType.String)]
         public Guid Id { get; set; }
+        public long Version { get; set; }
         public string Title { get; set;  }
         public DateTime StartTime { get; set; }
-        public string Duration { get; set; }
+        public int Duration { get; set; }
     }
 }

@@ -3,8 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ContextRunner;
 using ContextRunner.Base;
-using EventStoreLearning.Exceptions;
 using MongoDB.Driver;
+using ReasonCodeExceptions;
 
 namespace EventStoreLearning.Mongo
 {
@@ -17,7 +17,7 @@ namespace EventStoreLearning.Mongo
 
         public MongoDocumentClient(IContextRunner runner, MongoDbConfig mongoOptions)
         {
-            _runner = runner ?? new ContextRunner.ContextRunner();
+            _runner = runner ?? new ActionContextRunner();
             _config = mongoOptions;
         }
 
@@ -133,9 +133,9 @@ namespace EventStoreLearning.Mongo
             }
         }
 
-        private Exception LogAndReturnException(Action<string> logMethod, Exception ex)
+        private Exception LogAndReturnException(Action<string, bool> logMethod, Exception ex)
         {
-            logMethod?.Invoke(ex.Message);
+            logMethod?.Invoke(ex.Message, false);
 
             return ex;
         }

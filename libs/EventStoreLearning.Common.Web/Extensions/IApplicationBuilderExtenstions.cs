@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using ContextRunner.Http;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 namespace EventStoreLearning.Common.Web.Extensions
 {
@@ -15,7 +16,7 @@ namespace EventStoreLearning.Common.Web.Extensions
             app.UseRouting();
 
             app.UseMiddleware<ExceptionMiddleware>();
-            app.AddContextMiddleware();
+            app.UseContextRunnerHttpMiddleware();
 
             if (!env.IsDevelopment())
             {
@@ -23,11 +24,21 @@ namespace EventStoreLearning.Common.Web.Extensions
             }
 
             app.UseHttpsRedirection();
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                endpoints.MapHealthChecks("/health", new HealthCheckOptions()
+                {
+                    Predicate = _ => false
+                });
+
+                endpoints.MapHealthChecks("/health/ready", new HealthCheckOptions()
+                {
+                    Predicate = check => check.Tags.Contains("ready")
+                });
             });
         }
 

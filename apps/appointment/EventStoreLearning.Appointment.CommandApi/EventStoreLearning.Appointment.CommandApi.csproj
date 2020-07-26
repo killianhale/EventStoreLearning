@@ -29,34 +29,26 @@
     <ProjectReference Include="..\..\..\libs\EventStoreLearning.Common.Web\EventStoreLearning.Common.Web.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\libs\EventStoreLearning.EventSourcing\EventStoreLearning.EventSourcing.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\libs\EventStoreLearning.EventSourcing.EventStore\EventStoreLearning.EventSourcing.EventStore.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\libs\EventStoreLearning.Exceptions\EventStoreLearning.Exceptions.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\libs\EventStoreLearning.DependencyInjection.EventStore\EventStoreLearning.DependencyInjection.EventStore.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="8.0.0" />
-    <PackageReference Include="NLog" Version="4.6.8" />
+    <PackageReference Include="MediatR" Version="8.0.2" />
+    <PackageReference Include="NLog" Version="4.7.2" />
     <PackageReference Include="EventStore.ClientAPI.NetCore" Version="4.1.0.23" />
-    <PackageReference Include="Autofac" Version="5.1.2" />
+    <PackageReference Include="Autofac" Version="5.2.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.0" />
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.2" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="5.0.0" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.9.2" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="5.1.2" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
-    <PackageReference Include="ContextRunner.NLog" Version="1.0.0" />
-    <PackageReference Include="ContextRunner.FlatIO" Version="1.0.0" />
+    <PackageReference Include="ContextRunner.NLog" Version="1.0.8" />
+    <PackageReference Include="AggregateOP.EventStore" Version="1.0.1" />
+    <PackageReference Include="AggregateOP.MediatR" Version="1.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="mono_crash.a7f6f3845.0.json" />
   </ItemGroup>
 </Project>

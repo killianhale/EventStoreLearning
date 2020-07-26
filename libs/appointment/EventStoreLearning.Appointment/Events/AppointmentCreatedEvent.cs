@@ -1,10 +1,10 @@
 ﻿using System;
-using EventStoreLearning.EventSourcing;
+using AggregateOP.MediatR;
 using Newtonsoft.Json;
 
 namespace EventStoreLearning.Appointment.Events
 {
-    public class AppointmentCreatedEvent : IEvent
+    public class AppointmentCreatedEvent : IMediatedEvent
     {
         public AppointmentCreatedEvent(Guid aggregateId, string title, DateTime startTime, TimeSpan duration)
         {

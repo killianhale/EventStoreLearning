@@ -10,24 +10,23 @@
     <ProjectReference Include="..\..\..\libs\appointment\EventStoreLearning.Appointment.ReadModel\EventStoreLearning.Appointment.ReadModel.csproj" />
     <ProjectReference Include="..\..\..\libs\EventStoreLearning.Common\EventStoreLearning.Common.csproj" />
     <ProjectReference Include="..\..\..\libs\EventStoreLearning.Mongo\EventStoreLearning.Mongo.csproj" />
-    <ProjectReference Include="..\..\..\libs\EventStoreLearning.EventSourcing\EventStoreLearning.EventSourcing.csproj" />
-    <ProjectReference Include="..\..\..\libs\EventStoreLearning.EventSourcing.EventStore\EventStoreLearning.EventSourcing.EventStore.csproj" />
-    <ProjectReference Include="..\..\..\libs\EventStoreLearning.Mediation.EventSourcing.EventStore\EventStoreLearning.Mediation.EventSourcing.EventStore.csproj" />
-    <ProjectReference Include="..\..\..\libs\EventStoreLearning.DependencyInjection.EventStore\EventStoreLearning.DependencyInjection.EventStore.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MongoDB.Driver" Version="2.10.2" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
-    <PackageReference Include="MediatR" Version="8.0.0" />
+    <PackageReference Include="MongoDB.Driver" Version="2.10.4" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="MediatR" Version="8.0.2" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
-    <PackageReference Include="Autofac" Version="5.1.2" />
+    <PackageReference Include="Autofac" Version="5.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="EventStore.ClientAPI.NetCore" Version="4.1.0.23" />
-    <PackageReference Include="NLog" Version="4.6.8" />
-    <PackageReference Include="NLog.Extensions.Logging" Version="1.6.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.2" />
-    <PackageReference Include="ContextRunner.NLog" Version="1.0.0" />
+    <PackageReference Include="NLog" Version="4.7.2" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.6.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.6" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.6" />
+    <PackageReference Include="ContextRunner.NLog" Version="1.0.8" />
+    <PackageReference Include="AggregateOP.MediatR" Version="1.0.1" />
+    <PackageReference Include="AggregateOP.EventStore" Version="1.0.1" />
+    <PackageReference Include="ReasonCodeExceptions" Version="1.0.1" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="appsettings.json" />

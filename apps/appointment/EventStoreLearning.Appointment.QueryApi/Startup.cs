@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Autofac;
 using AutoMapper;
-using EventStoreLearning.Appointment.ReadModel;
-using EventStoreLearning.Common.Querying;
 using EventStoreLearning.Common.Utilities;
 using EventStoreLearning.Common.Web.Extensions;
 using ContextRunner;
@@ -15,15 +11,16 @@ using EventStoreLearning.Mongo;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using MongoDB.Driver;
+using EventStoreLearning.Common.Web;
 
+[assembly: ApiController]
+[assembly: ApiConventionType(typeof(QueryApiConvention))]
+[assembly: ApiConventionType(typeof(ErrorResponseApiConvention))]
 namespace EventStoreLearning.Appointment.QueryApi
 {
     internal class Startup
@@ -55,6 +52,7 @@ namespace EventStoreLearning.Appointment.QueryApi
             });
 
             services.Configure<MongoDbConfig>(Configuration.GetSection("AppointmentDB"));
+            services.Configure<NlogContextRunnerConfig>(Configuration.GetSection("NlogContext"));
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -63,9 +61,6 @@ namespace EventStoreLearning.Appointment.QueryApi
 
             builder.ConfigureMongo();
 
-            builder.RegisterType<AppointmentQueryMediator>()
-                .As<IMediate>();
-
             builder.RegisterAssemblyTypes(_assemblies)
                .Where(t => t.Name.EndsWith("Repository", StringComparison.CurrentCulture))
                .AsImplementedInterfaces();
@@ -73,6 +68,8 @@ namespace EventStoreLearning.Appointment.QueryApi
             builder.RegisterAssemblyTypes(_assemblies)
                .Where(t => t.Name.EndsWith("Service", StringComparison.CurrentCulture))
                .AsImplementedInterfaces();
+
+            builder.RegisterType<MediatedDataContractFactory>().As<IMediatedDataContractFactory>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)

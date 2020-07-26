@@ -1,9 +1,9 @@
 ﻿using System;
-using EventStoreLearning.EventSourcing.Commands;
+using AggregateOP.MediatR;
 
 namespace EventStoreLearning.Appointment.Commands
 {
-    public class CreateAppointmentCommand : ICommand
+    public class CreateAppointmentCommand : IMediatedCommand
     {
         public CreateAppointmentCommand(string title, DateTime startTime, TimeSpan duration)
         {

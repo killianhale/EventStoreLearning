@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using EventStoreLearning.Appointment.CommandApi.Contract;
-using EventStoreLearning.Appointment.CommandApi.Contract.Examples;
-using EventStoreLearning.Common.Web;
-using EventStoreLearning.Common.Web.Models;
-using EventStoreLearning.Common.Web.Extensions;
-using EventStoreLearning.Appointment.Commands;
-using EventStoreLearning.EventSourcing.Commands;
-using Microsoft.AspNetCore.Http;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Swashbuckle.AspNetCore.Filters;
-using MediatR;
+using EventStoreLearning.Appointment.CommandApi.Contract;
+using EventStoreLearning.Appointment.Commands;
+using Microsoft.AspNetCore.Http;
+using EventStoreLearning.Common.Web;
+using System;
+using EventStoreLearning.Common.Web.Extensions;
 
 namespace EventStoreLearning.Appointment.CommandApi.Controllers
 {
@@ -22,23 +13,18 @@ namespace EventStoreLearning.Appointment.CommandApi.Controllers
     /// Controller for all Appointment related endpoints
     /// </summary>
     [Route("v1/[controller]")]
-    [Consumes("application/json")]
-    [Produces("application/json")]
-    [ProducesErrorResponseType(typeof(ErrorResponse))]
-    [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status409Conflict)]
-    public class AppointmentController : BaseCommandController
+    public class AppointmentController : Controller
     {
-        private readonly IMapper _mapper;
+        private readonly IMediatedDataContractFactory _dataContractFactory;
 
         /// <summary>
         /// Ctor params provided by DI...
         /// </summary>
         /// <param name="mediator"></param>
         /// <param name="mapper"></param>
-        public AppointmentController(IMediator mediator, IMapper mapper)
-            : base(mediator)
+        public AppointmentController(IMediatedDataContractFactory dataContractFactory)
         {
-            _mapper = mapper;
+            _dataContractFactory = dataContractFactory;
         }
 
         /// <summary>
@@ -55,34 +41,96 @@ namespace EventStoreLearning.Appointment.CommandApi.Controllers
         ///     }
         ///
         /// </remarks>
-        /// <param name="request">The request containing info needed to create appointment</param>
-        /// <returns>A a success message</returns>
-        /// <response code="201">Returns a success message</response>
-        /// <response code="409">Returns an exception if there is a confict or error</response>  
+        /// <param name="request">The request containing info needed to create an appointment</param>
+        /// <returns>The ID of the appointment created</returns>
+        /// <response code="201">When successful, returns the ID assigned of the appointment created</response>
+        /// <response code="400">Returns an error response if there's a problem with the request</response>
+        /// <response code="401">Returns an error response if the user isn't allowed to make this request</response>
+        /// <response code="403">Returns an error response if the user hasn't authenticated</response>
+        /// <response code="404">Returns an error response if a dependency of the request wasn't found</response>
+        /// <response code="500">Returns an error response if there's a problem with the current environment</response>
+        /// <response code="503">Returns an error response if there's a temporary issue with the current environment</response>
+        /// <response code="509">Returns an error response if a conflict arises while attempting to fulfill the request</response>
         [HttpPost]
-        [ProducesResponseType(typeof(CreateAppointmentCommand), StatusCodes.Status201Created)]
-        [SwaggerRequestExample(typeof(CreateAppointmentRequest), typeof(CreateAppointmentCommandExamples))]
-        [SwaggerResponseExample(StatusCodes.Status201Created, typeof(CreateAppointmentCommandExamples))]
-        [SwaggerResponseExample(StatusCodes.Status409Conflict, typeof(CreateAppointmentCommandExamples))]
-        public async Task<JsonResult> Post([FromBody]CreateAppointmentRequest request)
+        public async Task<Guid> Post(CreateAppointmentRequest request)
         {
-            var command = _mapper.Map<CreateAppointmentCommand>(request);
+            var response = await _dataContractFactory.CreateContract<CreateAppointmentRequest, Guid>()
+                .Mediate<CreateAppointmentCommand>()
+                .Invoke(request);
+                //.CreateApiResponse(StatusCodes.Status201Created);
 
-            var id = await PublishCommand(command);
-
-            return CreateApiResponse(id, StatusCodes.Status201Created);
+            return response;
         }
 
-        //// PUT api/values/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody]Appointment value)
-        //{
-        //}
+        /// <summary>
+        /// Change an appointment
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT /v1/appointment
+        ///     {
+        ///         "id": "4556a817-80cc-4d1f-bb77-9fa64da21326",
+        ///         "version": 2,
+        ///         "title": "Sample Meeting #1", //optional
+        ///         "startTime": "2019-11-07T01:28:10.093Z", //optional
+        ///         "durationMinutes": 30 //optional
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="request">The request containing info needed to change an appointment</param>
+        /// <returns>The ID of the appointment changed</returns>
+        /// <response code="200">When successful, returns the ID assigned of the appointment changed</response>
+        /// <response code="400">Returns an error response if there's a problem with the request</response>
+        /// <response code="401">Returns an error response if the user isn't allowed to make this request</response>
+        /// <response code="403">Returns an error response if the user hasn't authenticated</response>
+        /// <response code="404">Returns an error response if a dependency of the request wasn't found</response>
+        /// <response code="500">Returns an error response if there's a problem with the current environment</response>
+        /// <response code="503">Returns an error response if there's a temporary issue with the current environment</response>
+        /// <response code="509">Returns an error response if a conflict arises while attempting to fulfill the request</response>
+        [HttpPut("{id}")]
+        public async Task<Guid> Put(ChangeAppointmentRequest request)
+        {
+            var response = await _dataContractFactory.CreateContract<ChangeAppointmentRequest, Guid>()
+                .Mediate<ChangeAppointmentCommand>()
+                .Invoke(request);
+                //.CreateApiResponse();
 
-        //// DELETE api/values/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+            return response;
+        }
+
+        /// <summary>
+        /// Cancel an appointment
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT /v1/appointment
+        ///     {
+        ///         "id": "4556a817-80cc-4d1f-bb77-9fa64da21326",
+        ///         "version": 2,
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="request">The request containing info needed to cancel an appointment</param>
+        /// <returns>The ID of the appointment cancelled</returns>
+        /// <response code="200">When successful, returns the ID assigned of the appointment cancelled</response>
+        /// <response code="400">Returns an error response if there's a problem with the request</response>
+        /// <response code="401">Returns an error response if the user isn't allowed to make this request</response>
+        /// <response code="403">Returns an error response if the user hasn't authenticated</response>
+        /// <response code="404">Returns an error response if a dependency of the request wasn't found</response>
+        /// <response code="500">Returns an error response if there's a problem with the current environment</response>
+        /// <response code="503">Returns an error response if there's a temporary issue with the current environment</response>
+        /// <response code="509">Returns an error response if a conflict arises while attempting to fulfill the request</response>
+        [HttpDelete("{id}")]
+        public async Task<Guid> Delete(CancelAppointmentRequest request)
+        {
+            var response = await _dataContractFactory.CreateContract<CancelAppointmentRequest, Guid>()
+                .Mediate<CancelAppointmentCommand>()
+                .Invoke(request);
+                //.CreateApiResponse();
+
+            return response;
+        }
     }
 }

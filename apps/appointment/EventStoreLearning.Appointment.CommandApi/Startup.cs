@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
-using EventStoreLearning.EventSourcing;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,7 +21,6 @@ using System.IO;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using EventStoreLearning.Common.Web.Extensions;
 using EventStoreLearning.Common.Utilities;
-using EventStoreLearning.EventSourcing.EventStore;
 using ActionContext = ContextRunner.Base.ActionContext;
 using Microsoft.Extensions.Options;
 using NLog;
@@ -30,12 +28,20 @@ using EventStoreLearning.Common.Web.Middleware;
 using System.Dynamic;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Http;
-using EventStoreLearning.DependencyInjection.EventStore;
 using ContextRunner;
 using ContextRunner.NLog;
 using ContextRunner.State;
-using ContextRunner.FlatIO;
+using EventStoreLearning.Common.Web;
+using EventStoreLearning.Appointment.CommandApi;
+using Swashbuckle.AspNetCore.Filters;
+using EventStoreLearning.Appointment.CommandApi.Contract.Examples;
+using AggregateOP.EventStore;
+using AggregateOP;
+using AggregateOP.MediatR;
 
+[assembly: ApiController]
+[assembly: ApiConventionType(typeof(CommandApiConvention))]
+[assembly: ApiConventionType(typeof(ErrorResponseApiConvention))]
 namespace EventStoreLearning.Appointment.CommandApi
 {
     internal class Startup
@@ -55,8 +61,10 @@ namespace EventStoreLearning.Appointment.CommandApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<EventStoreConfig>(Configuration.GetSection("EventStore"));
+            services.Configure<NlogContextRunnerConfig>(Configuration.GetSection("NlogContext"));
+
             services.AddAutoMapper(typeof(Startup));
-            services.AddMediatR(_assemblies);
 
             services.ConfigureMvc();
             services.ConfigureSwagger(Assembly.GetExecutingAssembly(), "v1", new OpenApiInfo
@@ -66,32 +74,21 @@ namespace EventStoreLearning.Appointment.CommandApi
                 Description = "An API for publishing commands for manipulating appointment data."
             });
 
-            services.Configure<EventStoreConfig>(Configuration.GetSection("EventStore"));
-            services.Configure<NlogContextRunnerConfig>(Configuration.GetSection("NlogContext"));
-            services.Configure<FlatIOContextRunnerConfig>(Configuration.GetSection("FlatContext"));
+            services.ConfigureAggregateOP(_assemblies, factory =>
+            {
+                factory.AddMediatR();
+                factory.AddEventStore();
 
-            ActionContext.Loaded += Context_Loaded;
-            ActionContext.Unloaded += Context_Unloaded;
-        }
-
-        private void Context_Loaded(ActionContext context)
-        {
-            var logger = LogManager.GetLogger("Metrics");
-            logger.Info($"New context '{context.ContextName}' loaded");
-        }
-
-        private void Context_Unloaded(ActionContext context)
-        {
-            var logger = LogManager.GetLogger("Metrics");
-            logger.Info($"Context '{context.ContextName}' unloaded with {context.TimeElapsed.Milliseconds} MS total runtime.");
+                factory.AddCommandHandlers();
+                factory.AddEventHandlers();
+            });
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterType<NlogContextRunner>().As<IContextRunner>();
-            //builder.RegisterType<FlatIOContextRunner>().As<IContextRunner>();
 
-            builder.ConfigureEventStore(_assemblies, true, true);
+            builder.RegisterType<MediatedDataContractFactory>().As<IMediatedDataContractFactory>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)

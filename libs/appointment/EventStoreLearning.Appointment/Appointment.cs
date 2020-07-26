@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using EventStoreLearning.EventSourcing;
+using AggregateOP.Base;
 using EventStoreLearning.Appointment.Events;
 
 namespace EventStoreLearning.Appointment
